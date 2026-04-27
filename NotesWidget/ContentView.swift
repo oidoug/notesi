@@ -13,6 +13,16 @@ struct ContentView: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
+            VisualEffectBackground()
+
+            // gets a touch of color to feel less washed-out.
+            Color.black
+                .opacity(colorScheme == .dark ? 0.4 : 0.0)
+                .allowsHitTesting(false)
+            Color.white
+                .opacity(colorScheme == .dark ? 0.0 : 0.15)
+                .allowsHitTesting(false)
+
             EditableTextView(
                 text: $text,
                 fontSize: fontSize,
@@ -20,18 +30,13 @@ struct ContentView: View {
                 onIncreaseFontSize: increaseFontSize,
                 onDecreaseFontSize: decreaseFontSize
             )
-            .background(backgroundColor)
 
             PinButton(isPinned: $isPinned)
                 .padding(.top, 4)
                 .padding(.trailing, 8)
         }
         .ignoresSafeArea()
-        .background(WindowLevelController(isPinned: isPinned))
-    }
-
-    private var backgroundColor: Color {
-        colorScheme == .dark ? Color(white: 0.12) : Color(white: 0.98)
+        .background(WindowChromeController(isPinned: isPinned))
     }
 
     private func increaseFontSize() {
@@ -83,7 +88,19 @@ private struct PinButton: View {
     }
 }
 
-private struct WindowLevelController: NSViewRepresentable {
+private struct VisualEffectBackground: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSVisualEffectView {
+        let view = NSVisualEffectView()
+        view.material = .hudWindow
+        view.blendingMode = .behindWindow
+        view.state = .active
+        return view
+    }
+
+    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {}
+}
+
+private struct WindowChromeController: NSViewRepresentable {
     let isPinned: Bool
 
     func makeNSView(context: Context) -> NSView {
@@ -92,9 +109,23 @@ private struct WindowLevelController: NSViewRepresentable {
 
     func updateNSView(_ nsView: NSView, context: Context) {
         let pinned = isPinned
+        let coordinator = context.coordinator
         DispatchQueue.main.async { [weak nsView] in
             guard let window = nsView?.window else { return }
             window.level = pinned ? .floating : .normal
+
+            if !coordinator.didConfigure {
+                window.isOpaque = false
+                window.backgroundColor = .clear
+                window.hasShadow = true
+                coordinator.didConfigure = true
+            }
         }
+    }
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    final class Coordinator {
+        var didConfigure = false
     }
 }
