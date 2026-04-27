@@ -155,6 +155,10 @@ final class NotesTextView: NSTextView {
         let selection = self.selectedRange()
         let selectedLineRange = nsString.lineRange(for: selection)
 
+        // Cursor on the implicit empty line after a trailing newline:
+        // there's no actual line content to move.
+        guard selectedLineRange.length > 0 else { return }
+
         if up {
             // No previous line — nothing to move.
             guard selectedLineRange.location > 0 else { return }
