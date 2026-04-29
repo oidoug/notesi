@@ -1,9 +1,9 @@
 import SwiftUI
 import AppKit
+import Combine
 
 struct ContentView: View {
-    @AppStorage("noteText") private var text: String = ""
-    @AppStorage("fontSize") private var fontSize: Double = 14
+    @StateObject private var store = NoteStore()
     @AppStorage("isPinned") private var isPinned: Bool = false
     @Environment(\.colorScheme) private var colorScheme
 
@@ -24,8 +24,8 @@ struct ContentView: View {
                 .allowsHitTesting(false)
 
             EditableTextView(
-                text: $text,
-                fontSize: fontSize,
+                text: $store.text,
+                fontSize: store.fontSize,
                 colorScheme: colorScheme,
                 onIncreaseFontSize: increaseFontSize,
                 onDecreaseFontSize: decreaseFontSize
@@ -40,11 +40,109 @@ struct ContentView: View {
     }
 
     private func increaseFontSize() {
-        fontSize = min(Self.maxFontSize, fontSize + Self.fontStep)
+        store.fontSize = min(Self.maxFontSize, store.fontSize + Self.fontStep)
     }
 
     private func decreaseFontSize() {
-        fontSize = max(Self.minFontSize, fontSize - Self.fontStep)
+        store.fontSize = max(Self.minFontSize, store.fontSize - Self.fontStep)
+    }
+}
+
+private final class NoteStore: ObservableObject {
+    @Published var text: String {
+        didSet {
+            guard !isApplyingExternalChange else { return }
+            persist(text, forKey: Keys.text)
+        }
+    }
+
+    @Published var fontSize: Double {
+        didSet {
+            guard !isApplyingExternalChange else { return }
+            persist(fontSize, forKey: Keys.fontSize)
+        }
+    }
+
+    private enum Keys {
+        static let text = "noteText"
+        static let fontSize = "fontSize"
+        static let defaultFontSize: Double = 14
+    }
+
+    private let defaults = UserDefaults.standard
+    private let cloud = NSUbiquitousKeyValueStore.default
+    private var observer: NSObjectProtocol?
+    private var isApplyingExternalChange = false
+
+    init() {
+        let cloudText = cloud.string(forKey: Keys.text)
+        let localText = defaults.string(forKey: Keys.text)
+        self.text = cloudText ?? localText ?? ""
+
+        let cloudFontSize = (cloud.object(forKey: Keys.fontSize) as? NSNumber)?.doubleValue
+        let localFontSize = defaults.object(forKey: Keys.fontSize) as? Double
+        self.fontSize = cloudFontSize ?? localFontSize ?? Keys.defaultFontSize
+
+        // First-run on a new device: push existing local values up to iCloud.
+        if cloudText == nil, let local = localText {
+            cloud.set(local, forKey: Keys.text)
+        }
+        if cloudFontSize == nil, let local = localFontSize {
+            cloud.set(local, forKey: Keys.fontSize)
+        }
+
+        cloud.synchronize()
+
+        observer = NotificationCenter.default.addObserver(
+            forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: cloud,
+            queue: .main
+        ) { [weak self] note in
+            self?.applyExternalChange(note)
+        }
+    }
+
+    deinit {
+        if let observer {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
+
+    private func persist(_ value: String, forKey key: String) {
+        defaults.set(value, forKey: key)
+        cloud.set(value, forKey: key)
+    }
+
+    private func persist(_ value: Double, forKey key: String) {
+        defaults.set(value, forKey: key)
+        cloud.set(value, forKey: key)
+    }
+
+    private func applyExternalChange(_ note: Notification) {
+        guard let userInfo = note.userInfo,
+              let changedKeys = userInfo[NSUbiquitousKeyValueStoreChangedKeysKey] as? [String]
+        else { return }
+
+        isApplyingExternalChange = true
+        defer { isApplyingExternalChange = false }
+
+        for key in changedKeys {
+            switch key {
+            case Keys.text:
+                if let newValue = cloud.string(forKey: key), newValue != text {
+                    text = newValue
+                    defaults.set(newValue, forKey: key)
+                }
+            case Keys.fontSize:
+                if let newValue = (cloud.object(forKey: key) as? NSNumber)?.doubleValue,
+                   newValue != fontSize {
+                    fontSize = newValue
+                    defaults.set(newValue, forKey: key)
+                }
+            default:
+                break
+            }
+        }
     }
 }
 
