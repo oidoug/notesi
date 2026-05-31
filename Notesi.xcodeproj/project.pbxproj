@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		F52D192E2F9FCDEE001E2F9A /* NotesWidget */ = {
+		F52D192E2F9FCDEE001E2F9A /* Notesi */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = NotesWidget;
+			path = Notesi;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		F52D19232F9FCDEE001E2F9A = {
 			isa = PBXGroup;
 			children = (
-				F52D192E2F9FCDEE001E2F9A /* NotesWidget */,
+				F52D192E2F9FCDEE001E2F9A /* Notesi */,
 				F52D192D2F9FCDEE001E2F9A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				F52D192E2F9FCDEE001E2F9A /* NotesWidget */,
+				F52D192E2F9FCDEE001E2F9A /* Notesi */,
 			);
 			name = NotesWidget;
 			packageProductDependencies = (
@@ -249,8 +249,9 @@
 		F52D19382F9FCDEF001E2F9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Notesi;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -263,6 +264,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Notesi;
 				INFOPLIST_KEY_CFBundleName = Notesi;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -285,8 +287,9 @@
 		F52D19392F9FCDEF001E2F9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Notesi;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -299,6 +302,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Notesi;
 				INFOPLIST_KEY_CFBundleName = Notesi;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
