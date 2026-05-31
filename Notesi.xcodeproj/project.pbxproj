@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		F52D192C2F9FCDEE001E2F9A /* NotesWidget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotesWidget.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F52D192C2F9FCDEE001E2F9A /* Notesi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notesi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		F52D192D2F9FCDEE001E2F9A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F52D192C2F9FCDEE001E2F9A /* NotesWidget.app */,
+				F52D192C2F9FCDEE001E2F9A /* Notesi.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F52D192B2F9FCDEE001E2F9A /* NotesWidget */ = {
+		F52D192B2F9FCDEE001E2F9A /* Notesi */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F52D19372F9FCDEF001E2F9A /* Build configuration list for PBXNativeTarget "NotesWidget" */;
+			buildConfigurationList = F52D19372F9FCDEF001E2F9A /* Build configuration list for PBXNativeTarget "Notesi" */;
 			buildPhases = (
 				F52D19282F9FCDEE001E2F9A /* Sources */,
 				F52D19292F9FCDEE001E2F9A /* Frameworks */,
@@ -63,11 +63,11 @@
 			fileSystemSynchronizedGroups = (
 				F52D192E2F9FCDEE001E2F9A /* Notesi */,
 			);
-			name = NotesWidget;
+			name = Notesi;
 			packageProductDependencies = (
 			);
 			productName = NotesWidget;
-			productReference = F52D192C2F9FCDEE001E2F9A /* NotesWidget.app */;
+			productReference = F52D192C2F9FCDEE001E2F9A /* Notesi.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -86,7 +86,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F52D19272F9FCDEE001E2F9A /* Build configuration list for PBXProject "NotesWidget" */;
+			buildConfigurationList = F52D19272F9FCDEE001E2F9A /* Build configuration list for PBXProject "Notesi" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -100,7 +100,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F52D192B2F9FCDEE001E2F9A /* NotesWidget */,
+				F52D192B2F9FCDEE001E2F9A /* Notesi */,
 			);
 		};
 /* End PBXProject section */
@@ -253,10 +253,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GBW4BS358H;
+				DEVELOPMENT_TEAM = 3JFDJ69573;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -271,8 +272,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oidoug.notesi;
+				PRODUCT_BUNDLE_IDENTIFIER = app.sizeup.notesi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -291,10 +293,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GBW4BS358H;
+				DEVELOPMENT_TEAM = 3JFDJ69573;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -309,8 +312,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oidoug.notesi;
+				PRODUCT_BUNDLE_IDENTIFIER = app.sizeup.notesi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -324,7 +328,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F52D19272F9FCDEE001E2F9A /* Build configuration list for PBXProject "NotesWidget" */ = {
+		F52D19272F9FCDEE001E2F9A /* Build configuration list for PBXProject "Notesi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F52D19352F9FCDEF001E2F9A /* Debug */,
@@ -333,7 +337,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F52D19372F9FCDEF001E2F9A /* Build configuration list for PBXNativeTarget "NotesWidget" */ = {
+		F52D19372F9FCDEF001E2F9A /* Build configuration list for PBXNativeTarget "Notesi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F52D19382F9FCDEF001E2F9A /* Debug */,
