@@ -44,7 +44,7 @@ struct EditableTextView: NSViewRepresentable {
 
         textView.delegate = context.coordinator
         textView.coordinator = context.coordinator
-        textView.isRichText = false
+        textView.isRichText = true
         textView.isAutomaticQuoteSubstitutionEnabled = false
         textView.isAutomaticDashSubstitutionEnabled = false
         textView.isAutomaticTextReplacementEnabled = false
@@ -83,6 +83,15 @@ struct EditableTextView: NSViewRepresentable {
         textView.textColor = isDark ? .white : .black
         textView.insertionPointColor = isDark ? .white : .black
         textView.font = NSFont.systemFont(ofSize: CGFloat(fontSize))
+
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = 2
+        paragraph.paragraphSpacing = 8
+        textView.defaultParagraphStyle = paragraph
+        textView.noteParagraphStyle = paragraph
+        var typingAttrs = textView.typingAttributes
+        typingAttrs[.paragraphStyle] = paragraph
+        textView.typingAttributes = typingAttrs
     }
 
     final class Coordinator: NSObject, NSTextViewDelegate {
@@ -109,6 +118,32 @@ struct EditableTextView: NSViewRepresentable {
 
 final class NotesTextView: NSTextView {
     weak var coordinator: EditableTextView.Coordinator?
+
+    var noteParagraphStyle: NSParagraphStyle? {
+        didSet { applyNoteParagraphStyle() }
+    }
+
+    override func didChangeText() {
+        super.didChangeText()
+        applyNoteParagraphStyle()
+    }
+
+    override func paste(_ sender: Any?) {
+        pasteAsPlainText(sender)
+    }
+
+    private func applyNoteParagraphStyle() {
+        guard let style = noteParagraphStyle,
+              let storage = textStorage,
+              storage.length > 0 else { return }
+        let range = NSRange(location: 0, length: storage.length)
+        storage.beginEditing()
+        storage.addAttribute(.paragraphStyle, value: style, range: range)
+        storage.endEditing()
+        layoutManager?.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
+        layoutManager?.invalidateDisplay(forCharacterRange: range)
+        needsDisplay = true
+    }
 
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         guard event.type == .keyDown else {
